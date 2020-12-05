@@ -1,5 +1,5 @@
 #load "str.cma";;
-exception UnexpectedOutput;;
+exception UnexpectedInput;;
 
 type passport = string option list
 
@@ -33,7 +33,7 @@ let hgt_condition (value : string) : bool =
     match units with
     | "cm" -> (int_of_string digits >= 150) && (int_of_string digits <= 193)
     | "in" -> (int_of_string digits >= 59) && (int_of_string digits <= 76)
-    | _ -> raise UnexpectedOutput
+    | _ -> raise UnexpectedInput
   )
 ;;
 
@@ -69,9 +69,9 @@ let format_passport (passport_string : string list) : passport=
             | 0 -> format_passport_h tl keys ((Some v)::acc)
             | -1 -> format_passport_h passport_string keys (None::acc)
             | 1 -> format_passport_h tl keys_remaining acc
-            | _ -> raise UnexpectedOutput
+            | _ -> raise UnexpectedInput
           )
-        | _ -> raise UnexpectedOutput
+        | _ -> raise UnexpectedInput
       )
   in
   List.rev (format_passport_h passport_info (List.sort String.compare passport_keys) [])

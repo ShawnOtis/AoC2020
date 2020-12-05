@@ -1,4 +1,4 @@
-exception UnexpectedOutput;;
+exception UnexpectedInput;;
 
 type passport = string option list
 
@@ -21,9 +21,9 @@ let format_passport (passport_string : string list) : passport=
             | 0 -> format_passport_h tl keys ((Some v)::acc)
             | -1 -> format_passport_h passport_string keys (None::acc)
             | 1 -> format_passport_h tl keys_remaining acc
-            | _ -> raise UnexpectedOutput
+            | _ -> raise UnexpectedInput
           )
-        | _ -> raise UnexpectedOutput
+        | _ -> raise UnexpectedInput
       )
   in
   List.rev (format_passport_h passport_info (List.sort String.compare passport_keys) [])
